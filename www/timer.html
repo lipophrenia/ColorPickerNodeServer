@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi-Res Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #202020;
+            color: #bbb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .main-container {
+            background: #202020;
+            padding: 20px;
+            width: 90%;
+            max-width: 90%;
+        }
+        .title {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+        .counter {
+            text-align:center;
+            font-size:10em;
+            font-weight:700;
+            line-height:1;
+        }
+        .fps_counter {
+            text-align:center;
+            font-size:4em;
+        }
+        .small {
+            text-align:center;
+            font-size: 0.875em;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="title">Hi-Res Timer</div>
+        <p class="counter" id="time">0</p>
+        <p class="fps_counter"><span id="fps">60</span> fps</p>
+        <p class="small">Time is in milliseconds. Refresh the page to reset the counter.</p>
+    </div>
+
+    <script>
+        const t = document.querySelector('#time');
+        const f = document.querySelector('#fps');
+        const times = [];
+        let fps;
+
+        function refreshLoop() {
+            window.requestAnimationFrame(() => {
+                const now = performance.now();
+                t.textContent = Math.ceil(now);
+                while (times.length > 0 && times[0] <= now - 1000) {
+                    times.shift();
+                }
+                times.push(now);
+                fps = times.length;
+                refreshLoop();
+            });
+        }
+        refreshLoop();
+
+        setInterval(() => {f.textContent = fps;}, 1000)
+    </script>
+</body>
+</html>

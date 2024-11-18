@@ -3,10 +3,20 @@ const port = 8000;
 const express = require("express");
 const app = express();
 
-htmlpage = __dirname + "/www/index.html";
+htmlindex = __dirname + "/www/index.html";
+htmlcolorpick = __dirname + "/www/colorpick.html";
+htmltimer = __dirname + "/www/timer.html";
 
 app.get("/", function (req, res) {
-  res.sendFile(htmlpage);
+  res.sendFile(htmlindex);
+});
+
+app.get("/colorpick", function (req, res) {
+  res.sendFile(htmlcolorpick);
+});
+
+app.get("/timer", function (req, res) {
+  res.sendFile(htmltimer);
 });
 
 app.listen(port, () => {
